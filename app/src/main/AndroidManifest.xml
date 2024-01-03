@@ -11,6 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NlTranslator"
-        tools:targetApi="31" />
+        tools:targetApi="34">
+
+        <activity
+            android:name="com.jinil.nltranslator.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    </application>
 
 </manifest>
