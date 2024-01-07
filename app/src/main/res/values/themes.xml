@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.NlTranslator" parent="Theme.AppCompat.DayNight.Dialog.Alert" />
+    <style name="Theme.NlTranslator" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>
