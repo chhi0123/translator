@@ -1,6 +1,8 @@
 package com.jinil.nltranslator
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.addCallback
 import androidx.activity.compose.setContent
@@ -26,13 +28,17 @@ import com.jinil.nltranslator.ui.theme.NlTranslatorTheme
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.setGravity(Gravity.BOTTOM)
+
+        val inputText = getInputTextFromIntent()
         setContent {
             NlTranslatorTheme {
                 Surface(
                     modifier = Modifier.wrapContentSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AppContent()
+                    AppContent(inputText = inputText)
                 }
             }
         }
@@ -40,16 +46,24 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    private fun getInputTextFromIntent(): String {
+        return if (intent.action == Intent.ACTION_PROCESS_TEXT) {
+            intent.getStringExtra(Intent.EXTRA_PROCESS_TEXT) ?: ""
+        } else {
+            ""
+        }
+    }
 }
 
 @Composable
-fun AppContent() {
+fun AppContent(inputText: String = "") {
     Column(
         modifier = Modifier
             .clip(shape = RoundedCornerShape(40.dp))
             .padding(40.dp)
     ) {
-        Text(text = "first!")
+        Text(text = inputText)
         Spacer(modifier = Modifier
             .height(12.dp)
             .fillMaxWidth())
