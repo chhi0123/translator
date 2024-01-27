@@ -2,7 +2,9 @@ package com.jinil.nltranslator
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +18,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,8 +35,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity() {
             this,
             NlTranslatorViewModelFactory()
         )[NlTranslatorViewModel::class.java]
+        viewModel.init(inputText)
 
         setContent {
             NlTranslatorTheme {
@@ -92,6 +94,7 @@ fun AppContent(
     viewModel: NlTranslatorViewModel,
 ) {
     val loadingState by viewModel.loadingState.collectAsState()
+    Log.i("asd", "asd $loadingState")
 
     Column(
         modifier = Modifier
@@ -122,6 +125,14 @@ fun AppContent(
                             .height(12.dp)
                             .fillMaxWidth()
                     )
+                }
+
+                is LoadingState.Toast -> {
+                    Toast.makeText(
+                        LocalContext.current,
+                        (loadingState as LoadingState.Toast).data,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
